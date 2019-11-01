@@ -9,20 +9,22 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    result = []
-
+    # cycle over array elements
     for i in range(length):
-        hash_table_insert(ht, weights[i], weights[i])
-
-    for i in range(length):
+        # get difference of limit and current weight
         diff = limit - weights[i]
 
+        # Check if current weight exist in cache
         cached = hash_table_retrieve(ht, diff)
-        if cached:
-            result.append(i)
-    if len(result):
-        print(result[::-1])
-        return result[::-1]
+        print(cached)
+
+        if cached is None:
+            hash_table_insert(ht, weights[i], i)
+        else:
+            if cached < i:
+                return (i, cached)
+            else:
+                return (cached, i)
 
     return None
 
@@ -34,4 +36,4 @@ def print_answer(answer):
         print("None")
 
 
-get_indices_of_item_weights([4, 6, 10, 15, 16], 5, 21)
+print(get_indices_of_item_weights([4, 6, 10, 15, 16], 5, 21))
