@@ -9,9 +9,18 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    weights.sort()
+
+    for i in range(length):
+        diff = limit - weights[i]
+
+        if diff < limit:
+            print(diff)
+            cached = hash_table_retrieve(ht, diff)
+            if cached:
+                return cached
+            else:
+                hash_table_insert(ht, diff, diff)
 
     return None
 
@@ -21,3 +30,6 @@ def print_answer(answer):
         print(str(answer[0] + " " + answer[1]))
     else:
         print("None")
+
+
+print(get_indices_of_item_weights([6, 4, 10, 15, 16], 5, 21))
