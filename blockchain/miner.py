@@ -28,7 +28,7 @@ def valid_proof(last_hash, proof):
     # hashing the guess
     guess_hash = hashlib.sha256(guess).hexdigest()
 
-    print('Last guess', last_hash)
+    print('Old guess', last_hash)
     print('New guess', guess_hash[0:6])
 
 
@@ -54,15 +54,15 @@ if __name__ == '__main__':
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof")
         data = r.json()
-        # new_proof = proof_of_work(data.get('proof'))
+        new_proof = proof_of_work(data.get('proof'))
 
-        # post_data = {"proof": new_proof,
-        #              "id": id}
+        post_data = {"proof": new_proof,
+                     "id": id}
 
-        # r = requests.post(url=node + "/mine", json=post_data)
-        # data = r.json()
-        # if data.get('message') == 'New Block Forged':
-        #     coins_mined += 1
-        #     print("Total coins mined: " + str(coins_mined))
-        # else:
-        #     print(data.get('message'))
+        r = requests.post(url=node + "/mine", json=post_data)
+        data = r.json()
+        if data.get('message') == 'New Block Forged':
+            coins_mined += 1
+            print("Total coins mined: " + str(coins_mined))
+        else:
+            print(data.get('message'))
