@@ -8,23 +8,23 @@ from hashtables import (HashTable,
 
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
-    weights.sort()
 
     result = []
 
     for i in range(length):
-        hash_table_insert(ht, weights[i], i)
+        hash_table_insert(ht, weights[i], weights[i])
 
     for i in range(length):
         diff = limit - weights[i]
 
-        if hash_table_retrieve(ht, diff):
+        cached = hash_table_retrieve(ht, diff)
+        if cached:
             result.append(i)
-        else:
-            hash_table_insert(ht, diff, diff)
+    if len(result):
+        print(result[::-1])
+        return result[::-1]
 
-    result.sort(reverse=True)
-    return result
+    return None
 
 
 def print_answer(answer):
@@ -34,4 +34,4 @@ def print_answer(answer):
         print("None")
 
 
-print(get_indices_of_item_weights([6, 4, 10, 15, 16], 5, 21))
+get_indices_of_item_weights([4, 6, 10, 15, 16], 5, 21)

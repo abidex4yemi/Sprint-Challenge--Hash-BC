@@ -86,7 +86,6 @@ def hash_table_retrieve(hash_table, key):
     current_pair = hash_table.storage[index]
 
     while current_pair is not None:
-        print(current_pair.value)
         if(current_pair.key == key):
             return current_pair.value
         current_pair = current_pair.next
